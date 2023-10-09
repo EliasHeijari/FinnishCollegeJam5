@@ -32,6 +32,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private GameObject impactBodyEffect;
     [SerializeField] private GameObject airTrace;
     [SerializeField] private float trailTime = 0.3f;
+    [SerializeField] private float spawnTrailTime = 0.3f;
 
     [Header("Damage UI")]
     [SerializeField] private GameObject canSpellImageObject;
@@ -242,7 +243,7 @@ public class Attack : MonoBehaviour
         float time = 0;
         Vector3 startPos = traceObject.transform.position;
 
-        while (time < 1)
+        while (time < spawnTrailTime)
         {
             traceObject.transform.position = Vector3.Lerp(startPos, hit.point, time);
             time += Time.deltaTime * trailTime;
