@@ -7,7 +7,6 @@ public class EnemyAI : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform player;
     [SerializeField] private Transform punchPoint;
-    [SerializeField] private GameObject hitIcon;
 
     [Header("Detection and Movement")]
     [SerializeField] private float detectionRange = 10f;
@@ -121,7 +120,6 @@ public class EnemyAI : MonoBehaviour
         {
             int meleeDamage = Random.Range(minMeleeDamage, maxMeleeDamage);
             player.TakeDamage(meleeDamage);
-            CreateHitMark(meleeDamage, hit.transform);
         }
     }
 
@@ -148,32 +146,6 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("IsWalking", true);
         animator.SetBool("IsAttacking", false);
         animator.SetBool("IsRunning", false);
-    }
-
-    private void CreateHitMark(int damage, Transform hit)
-    {
-        Vector3 dirToPlayer = (hit.position - transform.position).normalized;
-        Vector3 damageIconPos = hit.position + dirToPlayer + Vector3.up;
-        dirToPlayer += Vector3.up;
-        Quaternion rotation = Quaternion.LookRotation(-dirToPlayer, Vector3.up);
-        Vector3 offsetMark = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(0f, 0.3f), -0.3f);
-        GameObject damageIcon = Instantiate(hitIcon, damageIconPos + offsetMark, rotation);
-
-        GameObject damageCountGO = damageIcon.transform.GetChild(1).gameObject;
-        TextMeshProUGUI textMeshCount = damageCountGO.GetComponent<TextMeshProUGUI>();
-        if (textMeshCount != null)
-        {
-            textMeshCount.text = damage.ToString("D2");
-        }
-
-        GameObject damageCountShadowGO = damageIcon.transform.GetChild(2).gameObject;
-        TextMeshProUGUI textMeshShadow = damageCountShadowGO.GetComponent<TextMeshProUGUI>();
-        if (textMeshShadow != null)
-        {
-            textMeshShadow.text = damage.ToString("D2");
-        }
-
-        Destroy(damageIcon, 2f);
     }
 
     private void OnDrawGizmos()

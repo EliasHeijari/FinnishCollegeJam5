@@ -190,8 +190,8 @@ public class Attack : MonoBehaviour
         target.Damage(gunDamage);
 
         //play impact effect to hit point
-        GameObject impactPlayerEffect = Instantiate(impactBodyEffect, hit.point, Quaternion.LookRotation(hit.normal));
-        Destroy(impactPlayerEffect, 7f);
+        //GameObject impactPlayerEffect = Instantiate(impactBodyEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        //Destroy(impactPlayerEffect, 3f);
 
         // Hit mark icon
         //CreateHitMark(gunDamage, hit.transform);
