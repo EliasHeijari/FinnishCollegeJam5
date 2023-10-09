@@ -19,6 +19,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Melee Damage")]
     [SerializeField] private int minMeleeDamage = 0;
     [SerializeField] private int maxMeleeDamage = 3;
+    [SerializeField] private float waitTimeToDamage = 0.8f;
 
     [Header("Patrol")]
     public Vector3 patrolAreaCenter;
@@ -50,10 +51,10 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        velocity.y += gravity * Time.fixedDeltaTime;
-        characterController.Move(velocity * Time.fixedDeltaTime);
+        velocity.y = -2f;
+        characterController.Move(velocity * Time.deltaTime);
 
         float distanceToPlayer = Vector3.Distance(punchPoint.position, player.position);
 
@@ -61,7 +62,7 @@ public class EnemyAI : MonoBehaviour
         {
             Vector3 direction = player.position - transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
 
             if (distanceToPlayer <= attackRange)
             {
@@ -80,15 +81,20 @@ public class EnemyAI : MonoBehaviour
 
     private void Move()
     {
-        transform.Translate(Vector3.forward * moveSpeed * Time.fixedDeltaTime);
+        characterController.Move(transform.forward * moveSpeed * Time.deltaTime);
         animator.SetBool("IsRunning", true);
         animator.SetBool("IsAttacking", false);
         animator.SetBool("IsWalking", false);
+        animator.SetBool("TakeDamage", false);
     }
 
     private void Attack()
     {
-        if (startCountingPunchRate) counterTime += Time.fixedDeltaTime;
+        if (animator.GetBool("TakeDamage"))
+        {
+            counterTime = 0;
+        }
+        if (startCountingPunchRate) counterTime += Time.deltaTime;
 
         if (counterTime >= waitTimeUntilNextPunch)
         {
@@ -110,16 +116,18 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("IsAttacking", true);
         animator.SetBool("IsWalking", false);
         animator.SetBool("IsRunning", false);
+        animator.SetBool("TakeDamage", false);
     }
 
     private IEnumerator DoDamageToPlayer(Collider hit)
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(waitTimeToDamage);
 
         if (hit.gameObject.TryGetComponent(out Player player))
         {
             int meleeDamage = Random.Range(minMeleeDamage, maxMeleeDamage);
             player.TakeDamage(meleeDamage);
+            Debug.Log("damage made: " + meleeDamage);
         }
     }
 
@@ -134,8 +142,8 @@ public class EnemyAI : MonoBehaviour
         Vector3 targetPatrolPoint = patrolPoints[currentPatrolPoint];
         Vector3 direction = targetPatrolPoint - transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.fixedDeltaTime);
-        transform.Translate(Vector3.forward * patrolSpeed * Time.fixedDeltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+        characterController.Move(transform.forward * patrolSpeed * Time.deltaTime);
 
         float distanceToPatrolPoint = Vector3.Distance(transform.position, targetPatrolPoint);
         if (distanceToPatrolPoint < 1f)
@@ -146,6 +154,7 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("IsWalking", true);
         animator.SetBool("IsAttacking", false);
         animator.SetBool("IsRunning", false);
+        animator.SetBool("TakeDamage", false);
     }
 
     private void OnDrawGizmos()
