@@ -120,48 +120,9 @@ public class Attack : MonoBehaviour
             if (hit.TryGetComponent(out Target target))
             {
                 target.Damage(punchDamage);
-                //CreateHitMark(damage, hit.transform);
             }
         }
     }
-
-    /*private void CreateHitMark(int damage, Transform hit)
-    {
-        Vector3 dirToPlayer = (transform.position - hit.transform.position).normalized;
-        Vector3 damageIconPos = hit.transform.position + dirToPlayer + Vector3.up;
-        dirToPlayer += Vector3.up;
-        Quaternion rotation = Quaternion.LookRotation(-dirToPlayer, Vector3.up);
-        Vector3 offsetMark = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(0f, 0.3f), 0f);
-        GameObject damageIcon = Instantiate(hitIcon, damageIconPos + offsetMark, rotation);
-
-        GameObject damageCountGO = damageIcon.transform.GetChild(1).gameObject;
-        if (damageCountGO.TryGetComponent(out TextMeshProUGUI textMeshCount))
-        {
-            if (damage < 10)
-            {
-                textMeshCount.text = " " + damage.ToString();
-            }
-            else
-            {
-                textMeshCount.text = damage.ToString();
-            }
-        }
-
-        GameObject damageCountShadowGO = damageIcon.transform.GetChild(2).gameObject;
-        if (damageCountShadowGO.TryGetComponent(out TextMeshProUGUI textMeshShadow))
-        {
-            if (damage < 10)
-            {
-                textMeshShadow.text = " " + damage.ToString();
-            }
-            else
-            {
-                textMeshShadow.text = damage.ToString();
-            }
-        }
-
-        Destroy(damageIcon, 2f);
-    }*/
 
     IEnumerator ShootAttack()
     {

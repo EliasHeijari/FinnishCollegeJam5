@@ -17,8 +17,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float patrolSpeed = 2f;
 
     [Header("Melee Damage")]
-    [SerializeField] private int minMeleeDamage = 0;
-    [SerializeField] private int maxMeleeDamage = 3;
+    [SerializeField] private int meleeDamage = 2;
     [SerializeField] private float waitTimeToDamage = 0.8f;
 
     [Header("Patrol")]
@@ -31,10 +30,10 @@ public class EnemyAI : MonoBehaviour
     private Vector3[] patrolPoints;
     private int currentPatrolPoint = 0;
 
-    private float gravity = -9.81f;
     private Vector3 velocity;
     private bool startCountingPunchRate = false;
     private float counterTime = 0;
+    private bool playerSeen = false;
     [SerializeField] private float waitTimeUntilNextPunch = 3f;
 
     private void Start()
@@ -53,12 +52,17 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if (animator.GetBool("TakeDamage"))
+        {
+            playerSeen = true;
+            StartCoroutine(SetPlayerSeenToFalseAfterTime(5f));
+        }
         velocity.y = -2f;
         characterController.Move(velocity * Time.deltaTime);
 
         float distanceToPlayer = Vector3.Distance(punchPoint.position, player.position);
 
-        if (distanceToPlayer <= detectionRange)
+        if (distanceToPlayer <= detectionRange || playerSeen)
         {
             Vector3 direction = player.position - transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction);
@@ -77,6 +81,12 @@ public class EnemyAI : MonoBehaviour
         {
             Patrol();
         }
+    }
+
+    IEnumerator SetPlayerSeenToFalseAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        playerSeen = false;
     }
 
     private void Move()
@@ -125,9 +135,7 @@ public class EnemyAI : MonoBehaviour
 
         if (hit.gameObject.TryGetComponent(out Player player))
         {
-            int meleeDamage = Random.Range(minMeleeDamage, maxMeleeDamage);
             player.TakeDamage(meleeDamage);
-            Debug.Log("damage made: " + meleeDamage);
         }
     }
 
