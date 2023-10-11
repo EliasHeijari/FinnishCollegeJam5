@@ -10,7 +10,7 @@ public class DropKey : MonoBehaviour
     public void SpawnKey()
     {
         GameObject key = Instantiate(keyPrefab, dropTransform.position, Quaternion.identity);
-        key.transform.parent = null;
+        key.transform.parent = null; 
         key.transform.localPosition = Vector3.zero;
         key.transform.position = dropTransform.position;
     }
