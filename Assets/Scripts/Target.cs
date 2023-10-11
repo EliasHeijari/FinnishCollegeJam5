@@ -36,6 +36,11 @@ public class Target : MonoBehaviour
     }
     private void Die()
     {
+        if (gameObject.TryGetComponent(out DropKey dropKey))
+        {
+            Debug.Log("Spawn Key");
+            dropKey.SpawnKey();
+        }
         Destroy(gameObject);
     }
 
