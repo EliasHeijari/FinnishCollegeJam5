@@ -20,10 +20,15 @@ public class DoorInteractable : MonoBehaviour, IInteractable {
     }
 
     public void Interact(Transform interactorTransform) {
-        OpenDoorWithKey(playerKey.HasKey());
         if (!isLocked)
         {
             ToggleDoor();
+            interactText = "Open/Close" + "\n   Door";
+        }
+        else if (playerKey.HasKey())
+        {
+            OpenDoorWithKey(playerKey.HasKey());
+            interactText = "Door unlocked";
         }
         else
         {
