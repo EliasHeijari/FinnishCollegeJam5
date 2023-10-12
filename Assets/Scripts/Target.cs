@@ -40,7 +40,6 @@ public class Target : MonoBehaviour
         player.SetHealth(4);
         if (gameObject.TryGetComponent(out DropKey dropKey))
         {
-            Debug.Log("Spawn Key");
             dropKey.SpawnKey();
         }
         Destroy(gameObject);

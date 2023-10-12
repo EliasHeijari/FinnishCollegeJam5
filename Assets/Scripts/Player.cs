@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     PlayerInput playerInput;
     [SerializeField] private int health;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private Transform spawnPoint;
+    //[SerializeField] private Transform spawnPoint;
     [SerializeField] private float spawnTime = 3f;
     [SerializeField] private TextMeshProUGUI soulsText;
     [SerializeField] private Image soulsMeterImage;
@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
 
     private void Review()
     {
-        transform.position = spawnPoint.transform.position;
+        //transform.position = spawnPoint.transform.position;
         playerInput.enabled = true;
         DisableRagdoll();
         health = maxHealth;
