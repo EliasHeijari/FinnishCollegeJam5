@@ -456,12 +456,12 @@ MonoBehaviour:
   punchPoint: {fileID: 5214073068596377131}
   detectionRange: 9
   attackRange: 3
-  moveSpeed: 5
+  moveSpeed: 6
   rotationSpeed: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  patrolSpeed: 2
+  patrolSpeed: 2.6
   meleeDamage: 3
   waitTimeToDamage: 0.5
   patrolAreaCenter: {x: 29.01, y: 0.00000011920929, z: 3.9594493}

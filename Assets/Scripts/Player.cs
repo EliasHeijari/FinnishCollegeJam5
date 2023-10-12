@@ -114,4 +114,9 @@ public class Player : MonoBehaviour
     {
         return health;
     }
+
+    public void MinusHealth()
+    {
+        health -= 1;
+    }
 }

@@ -11,6 +11,7 @@ public class Attack : MonoBehaviour
     private Animator animator;
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
+    private Player player;
 
     [Header("Punch Attack")]
     [SerializeField] private Transform punchPoint;
@@ -51,6 +52,7 @@ public class Attack : MonoBehaviour
         animator = GetComponent<Animator>();
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
+        player = GetComponent<Player>();
         canSpellImage = canSpellImageObject.GetComponent<UnityEngine.UI.Image>();
         crosshairImage = crosshairImageObject.GetComponent<UnityEngine.UI.Image>();
     }
@@ -96,10 +98,11 @@ public class Attack : MonoBehaviour
             canSpellImage.color = new Color32(108, 108, 108, 255);
             crosshairImage.color = new Color32(0, 0, 0, 255);
         }
-        if (starterAssetsInputs.attack && Time.time > nextTimeToFire && thirdPersonController.Grounded)
+        if (starterAssetsInputs.attack && Time.time > nextTimeToFire && thirdPersonController.Grounded && player.GetHealth() > 1)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             animator.SetBool("Shoot", true);
+            player.MinusHealth();
             StartCoroutine(ShootAttack());
         }
         else

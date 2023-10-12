@@ -198,12 +198,12 @@ MonoBehaviour:
   punchPoint: {fileID: 754622209933975536}
   detectionRange: 9
   attackRange: 3
-  moveSpeed: 4
+  moveSpeed: 5
   rotationSpeed: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  patrolSpeed: 2.4
+  patrolSpeed: 2.6
   meleeDamage: 2
   waitTimeToDamage: 0.5
   patrolAreaCenter: {x: 0, y: 0, z: 0}
