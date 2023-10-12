@@ -1,5 +1,6 @@
 fileFormatVersion: 2
 guid: aad2ede51a6a3d74bb3d35e3ef592b45
+guid: 0d0b4303290743c4b9af40b3647b66b7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -18,6 +19,7 @@ ModelImporter:
     motionNodeName: 
     rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
       human bone 'Hips' not found\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -26,6 +28,7 @@ ModelImporter:
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -37,6 +40,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 26
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -129,6 +133,7 @@ ModelImporter:
       position: {x: 5.242534, y: 0.8452718, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -146,6 +151,16 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
