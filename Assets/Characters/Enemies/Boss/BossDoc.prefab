@@ -462,7 +462,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   patrolSpeed: 2.6
-  meleeDamage: 3
+  meleeDamage: 2
   waitTimeToDamage: 0.5
   patrolAreaCenter: {x: 29.01, y: 0.00000011920929, z: 3.9594493}
   patrolAreaSize: {x: 14.15, y: 1, z: 15.63}
@@ -480,8 +480,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd79fb5782819e14b9372b26b6b91b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 15
   playerTransform: {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &8927806859261911407
 MonoBehaviour:
   m_ObjectHideFlags: 0

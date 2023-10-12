@@ -9,6 +9,7 @@ public class Target : MonoBehaviour
     //[SerializeField]  private UnityEngine.UI.Image healthBarImage;
     //[SerializeField] private Transform healthBarCanvas;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] Player player;
     private Animator animator;
 
     private void Start()
@@ -36,6 +37,7 @@ public class Target : MonoBehaviour
     }
     private void Die()
     {
+        player.SetHealth(4);
         if (gameObject.TryGetComponent(out DropKey dropKey))
         {
             Debug.Log("Spawn Key");

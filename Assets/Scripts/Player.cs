@@ -2,8 +2,10 @@ using StarterAssets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -14,7 +16,9 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float spawnTime = 3f;
-    private CharacterController characterController;
+    [SerializeField] private TextMeshProUGUI soulsText;
+    [SerializeField] private Image soulsMeterImage;
+    private Color lowHealthColor = new Color(155, 0, 0, 255);
     public event EventHandler<OnHealthChangedEventArgs> OnHealthChanged;
     public class OnHealthChangedEventArgs : EventArgs
     {
@@ -28,7 +32,6 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
         _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
-        characterController = GetComponent<CharacterController>();
         DisableRagdoll();
 
         health = maxHealth;
@@ -36,10 +39,17 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        soulsText.text = health.ToString();
+        soulsMeterImage.fillAmount = Mathf.Lerp(soulsMeterImage.fillAmount, (float)health / (float)maxHealth, 3f * Time.deltaTime);
+        if (((float)health / (float)maxHealth) < 0.35f)
         {
-            Die();
-            StartCoroutine(SpawnPlayerAfterTime());
+            soulsText.color = lowHealthColor;
+            soulsMeterImage.color = lowHealthColor;
+        }
+        else
+        {
+            soulsText.color = Color.white;
+            soulsMeterImage.color = Color.white;
         }
     }
 
@@ -57,7 +67,6 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             Die();
-            StartCoroutine(SpawnPlayerAfterTime());
         }
     }
 
@@ -69,7 +78,6 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        characterController.enabled = false;
         playerInput.enabled = false;
         EnableRagdoll();
     }
@@ -77,7 +85,6 @@ public class Player : MonoBehaviour
     private void Review()
     {
         transform.position = spawnPoint.transform.position;
-        characterController.enabled = true;
         playerInput.enabled = true;
         DisableRagdoll();
         health = maxHealth;
@@ -110,6 +117,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetHealth(int amount)
+    {
+        health += amount;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+    }
     public int GetHealth()
     {
         return health;

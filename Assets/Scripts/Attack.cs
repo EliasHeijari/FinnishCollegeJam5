@@ -102,7 +102,6 @@ public class Attack : MonoBehaviour
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             animator.SetBool("Shoot", true);
-            player.MinusHealth();
             StartCoroutine(ShootAttack());
         }
         else
@@ -143,6 +142,7 @@ public class Attack : MonoBehaviour
             ShootAirTracer(hit);
             if (hit.transform.TryGetComponent(out Target target))
             {
+                player.MinusHealth();
                 StartCoroutine(DamageTarget(target, hit));
             }
         }
