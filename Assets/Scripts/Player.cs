@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -15,9 +16,10 @@ public class Player : MonoBehaviour
     [SerializeField] private int health;
     [SerializeField] private int maxHealth = 100;
     //[SerializeField] private Transform spawnPoint;
-    [SerializeField] private float spawnTime = 3f;
+    private float spawnTime = 3f;
     [SerializeField] private TextMeshProUGUI soulsText;
     [SerializeField] private Image soulsMeterImage;
+    [SerializeField] private GameObject endScreen;
     private Color lowHealthColor = new Color(155, 0, 0, 255);
     public event EventHandler<OnHealthChangedEventArgs> OnHealthChanged;
     public class OnHealthChangedEventArgs : EventArgs
@@ -66,20 +68,23 @@ public class Player : MonoBehaviour
 
         if (health <= 0)
         {
+            health = 0;
             Die();
         }
     }
 
-    IEnumerator SpawnPlayerAfterTime()
+    IEnumerator RestartGame()
     {
-        yield return new WaitForSeconds(spawnTime);
-        Review();
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void Die()
     {
         playerInput.enabled = false;
         EnableRagdoll();
+        endScreen.SetActive(true);
+        StartCoroutine(RestartGame());
     }
 
     private void Review()

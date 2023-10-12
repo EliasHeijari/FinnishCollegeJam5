@@ -11,6 +11,9 @@ public class Target : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] Player player;
     private Animator animator;
+    [SerializeField] private bool boss = false;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip mainSong;
 
     private void Start()
     {
@@ -37,6 +40,11 @@ public class Target : MonoBehaviour
     }
     private void Die()
     {
+        if (boss)
+        {
+            audioSource.clip = mainSong;
+            audioSource.Play();
+        }
         player.SetHealth(4);
         if (gameObject.TryGetComponent(out DropKey dropKey))
         {

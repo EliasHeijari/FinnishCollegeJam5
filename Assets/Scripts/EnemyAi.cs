@@ -35,6 +35,16 @@ public class EnemyAI : MonoBehaviour
     private float counterTime = 0;
     private bool playerSeen = false;
     [SerializeField] private float waitTimeUntilNextPunch = 3f;
+    [SerializeField] bool Boss = false;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource BossAudioSource;
+    [SerializeField] private AudioSource EnemyAudioSource;
+    [SerializeField] private AudioClip enemySeeClip;
+    [SerializeField] private AudioClip bossClip;
+    [SerializeField] private AudioClip bossStartingWords;
+    [SerializeField] private AudioClip bossLaughClip;
+    private bool enemySeeAdded = false;
+    private bool bossSongAdded = false;
 
     private void Start()
     {
@@ -67,6 +77,23 @@ public class EnemyAI : MonoBehaviour
             Vector3 direction = player.position - transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+            
+            // PLAY AUDIO, DOCTOR STARTS FOLLOWING YOU
+            // IF BOSS PLAY
+            if (Boss && !bossSongAdded)
+            {
+                bossSongAdded = true;
+                audioSource.clip = bossClip;
+                audioSource.Play();
+                BossAudioSource.Play();
+                StartCoroutine(BossLaughPlay());
+            }
+            else if (!enemySeeAdded) 
+            {
+                enemySeeAdded = true;
+                EnemyAudioSource.clip = enemySeeClip;
+                EnemyAudioSource.Play();
+            }
 
             if (distanceToPlayer <= attackRange)
             {
@@ -80,7 +107,15 @@ public class EnemyAI : MonoBehaviour
         else
         {
             Patrol();
+            enemySeeAdded = false;
         }
+    }
+
+    IEnumerator BossLaughPlay()
+    {
+        yield return new WaitForSeconds(14f);
+        BossAudioSource.clip = bossLaughClip;
+        BossAudioSource.Play();
     }
 
     IEnumerator SetPlayerSeenToFalseAfterTime(float time)

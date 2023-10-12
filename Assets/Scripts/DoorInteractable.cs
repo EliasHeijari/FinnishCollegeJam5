@@ -54,4 +54,9 @@ public class DoorInteractable : MonoBehaviour, IInteractable {
     public Transform GetTransform() {
         return transform;
     }
+
+    public bool IsOpen()
+    {
+        return isOpen;
+    }
 }

@@ -7960,19 +7960,27 @@ MonoBehaviour:
   player: {fileID: 0}
   punchPoint: {fileID: 4269904354943732726}
   detectionRange: 9
-  attackRange: 3.5
-  moveSpeed: 6
+  attackRange: 3.4
+  moveSpeed: 5
   rotationSpeed: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   patrolSpeed: 2.6
-  meleeDamage: 2
+  meleeDamage: 3
   waitTimeToDamage: 0.5
   patrolAreaCenter: {x: 16.082249, y: 0, z: 6.328866}
   patrolAreaSize: {x: 14.15, y: 1, z: 15.63}
   numberOfPatrolPoints: 8
   waitTimeUntilNextPunch: 2
+  Boss: 0
+  audioSource: {fileID: 0}
+  BossAudioSource: {fileID: 0}
+  EnemyAudioSource: {fileID: 0}
+  enemySeeClip: {fileID: 0}
+  bossClip: {fileID: 0}
+  bossStartingWords: {fileID: 0}
+  bossLaughClip: {fileID: 0}
 --- !u!114 &1734829609291928993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7985,9 +7993,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd79fb5782819e14b9372b26b6b91b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
+  maxHealth: 25
   playerTransform: {fileID: 0}
   player: {fileID: 0}
+  boss: 0
+  audioSource: {fileID: 0}
+  mainSong: {fileID: 0}
 --- !u!114 &4143870193627700393
 MonoBehaviour:
   m_ObjectHideFlags: 0
