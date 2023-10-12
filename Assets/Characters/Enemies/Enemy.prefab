@@ -198,7 +198,7 @@ MonoBehaviour:
   punchPoint: {fileID: 754622209933975536}
   detectionRange: 9
   attackRange: 3
-  moveSpeed: 5
+  moveSpeed: 5.5
   rotationSpeed: 5
   playerLayer:
     serializedVersion: 2
@@ -222,8 +222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd79fb5782819e14b9372b26b6b91b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 8
   playerTransform: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &771712834559137571
 GameObject:
   m_ObjectHideFlags: 0
