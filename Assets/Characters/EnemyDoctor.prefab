@@ -7682,7 +7682,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.44, y: 0, z: 4.0631323}
-  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3429755242703461095}
@@ -7752,7 +7752,7 @@ MonoBehaviour:
   player: {fileID: 0}
   punchPoint: {fileID: 3429755242703461095}
   detectionRange: 9
-  attackRange: 3.2
+  attackRange: 3.35
   moveSpeed: 5.5
   rotationSpeed: 5
   playerLayer:
