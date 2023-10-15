@@ -14,11 +14,15 @@ public class Target : MonoBehaviour
     [SerializeField] private bool boss = false;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip mainSong;
+    [SerializeField] private AudioClip takeDamageClip;
+    private Rigidbody[] _ragdollRigidbodies;
 
     private void Start()
     {
         health = maxHealth;
         animator = GetComponent<Animator>();
+        _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
+        DisableRagdoll();
     }
 
     /*private void Update()
@@ -32,6 +36,7 @@ public class Target : MonoBehaviour
     {
         health -= damage;
         animator.SetBool("TakeDamage", true);
+        AudioSource.PlayClipAtPoint(takeDamageClip, transform.position);
         //healthBarImage.fillAmount = (float)health / (float)maxHealth;
         if (health <= 0)
         {
@@ -50,7 +55,45 @@ public class Target : MonoBehaviour
         {
             dropKey.SpawnKey();
         }
-        Destroy(gameObject);
+        EnableRagdoll();
+        StartCoroutine(DisableRagdollAfterTime());
+    }
+
+    private void DisableRagdoll()
+    {
+        foreach (var rigidbody in _ragdollRigidbodies)
+        {
+            if (rigidbody.gameObject.GetComponent<BoxCollider>() != null) rigidbody.gameObject.GetComponent<BoxCollider>().enabled = false;
+            if (rigidbody.gameObject.GetComponent<CapsuleCollider>() != null) rigidbody.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            if (rigidbody.gameObject.GetComponent<SphereCollider>() != null) rigidbody.gameObject.GetComponent<SphereCollider>().enabled = false;
+            rigidbody.isKinematic = true;
+        }
+    }
+
+    public void EnableRagdoll()
+    {
+        if (transform.TryGetComponent(out CharacterController characterController))
+        {
+            characterController.enabled = false;
+        }
+        if (transform.TryGetComponent(out EnemyAI enemyAi))
+        {
+            enemyAi.enabled = false;
+        }
+        animator.enabled = false;
+        foreach (var rigidbody in _ragdollRigidbodies)
+        {
+            if (rigidbody.gameObject.GetComponent<BoxCollider>() != null) rigidbody.gameObject.GetComponent<BoxCollider>().enabled = true;
+            if (rigidbody.gameObject.GetComponent<CapsuleCollider>() != null) rigidbody.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            if (rigidbody.gameObject.GetComponent<SphereCollider>() != null) rigidbody.gameObject.GetComponent<SphereCollider>().enabled = true;
+            rigidbody.isKinematic = false;
+        }
+    }
+
+    IEnumerator DisableRagdollAfterTime()
+    {
+        yield return new WaitForSeconds(10f);
+        DisableRagdoll();
     }
 
     public int GetHealth()

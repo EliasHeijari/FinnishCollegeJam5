@@ -88,7 +88,7 @@ public class EnemyAI : MonoBehaviour
                 BossAudioSource.Play();
                 StartCoroutine(BossLaughPlay());
             }
-            else if (!enemySeeAdded) 
+            else if (!enemySeeAdded && !Boss) 
             {
                 enemySeeAdded = true;
                 EnemyAudioSource.clip = enemySeeClip;

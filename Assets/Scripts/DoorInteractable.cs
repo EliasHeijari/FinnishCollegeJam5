@@ -9,6 +9,9 @@ public class DoorInteractable : MonoBehaviour, IInteractable {
     [SerializeField] private bool isLocked = true;
     [SerializeField] private PlayerKey playerKey;
     [SerializeField] private string interactText = "Open/Close" + "\n   Door";
+    [SerializeField] private AudioClip DoorLockedClip;
+    [SerializeField] private AudioClip DoorUnlockedClip;
+    [SerializeField] private AudioClip DoorOpenClip;
 
     private void Awake() {
         animator = GetComponent<Animator>();
@@ -24,16 +27,19 @@ public class DoorInteractable : MonoBehaviour, IInteractable {
         {
             ToggleDoor();
             interactText = "Open/Close" + "\n   Door";
+            AudioSource.PlayClipAtPoint(DoorOpenClip, transform.position);
         }
         else if (playerKey.HasKey())
         {
             OpenDoorWithKey(playerKey.HasKey());
             interactText = "Door unlocked";
+            AudioSource.PlayClipAtPoint(DoorUnlockedClip, transform.position);
         }
         else
         {
             // Door is locked and player is trying to open it
             interactText = "Door is locked!" + "\n   find the key to open";
+            AudioSource.PlayClipAtPoint(DoorLockedClip, transform.position);
         }
     }
 

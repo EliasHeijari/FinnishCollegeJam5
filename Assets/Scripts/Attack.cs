@@ -46,6 +46,10 @@ public class Attack : MonoBehaviour
     private bool startCountingPunchRate = false;
     private float elapsedTime = 0f;
     [SerializeField] private float waitTimeRotateToTarget = 0.5f;
+    [SerializeField] private AudioSource playerAttackAudioSource;
+    [SerializeField] private AudioClip playerShootClip;
+    [SerializeField] private AudioClip playerPunchClip;
+
 
     private void Start()
     {
@@ -140,6 +144,8 @@ public class Attack : MonoBehaviour
             Quaternion TargetRotation = Quaternion.LookRotation(dirToObject, Vector3.up);
             StartCoroutine(RotateToTarget(TargetRotation));
             ShootAirTracer(hit);
+            playerAttackAudioSource.clip = playerShootClip;
+            playerAttackAudioSource.Play();
             if (hit.transform.TryGetComponent(out Target target))
             {
                 player.MinusHealth();
@@ -192,6 +198,8 @@ public class Attack : MonoBehaviour
         if (starterAssetsInputs.attack && !startCountingPunchRate)
         {
             animator.SetBool("Punch", true);
+            playerAttackAudioSource.clip = playerPunchClip;
+            playerAttackAudioSource.Play();
             StartCoroutine(PunchAttack());
             startCountingPunchRate = true;
             currentTime = 0;
